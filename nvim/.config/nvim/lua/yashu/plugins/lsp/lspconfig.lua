@@ -75,7 +75,6 @@ return {
 		local util = require("lspconfig/util")
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
@@ -95,7 +94,7 @@ return {
 
 					on_attach = function(client, bufnr)
 						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.ts", ".js" },
+							pattern = { "*.ts", "*.js, *.tsx, *.jsx" },
 							callback = function(ctx)
 								client.notify("$/onDidChangePyFile", { uri = ctx.match })
 							end,
@@ -106,6 +105,19 @@ return {
 							disableSuggestions = true,
 						},
 					},
+				})
+			end,
+			["tailwindcss"] = function()
+				lspconfig["tailwindcss"].setup({
+					capabilities = capabilities,
+					on_attach = function(client, bufnr)
+						vim.api.nvim_create_autocmd("BufWritePost", {
+							pattern = { "*.ts", "*.js, *.tsx, *.jsx" },
+							callback = function(ctx)
+								client.notify("$/onDidChangePyFile", { uri = ctx.match })
+							end,
+						})
+					end,
 				})
 			end,
 			["pyright"] = function()

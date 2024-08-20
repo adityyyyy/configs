@@ -1,5 +1,6 @@
 return {
 	"stevearc/conform.nvim",
+  branch = "nvim-0.9",
 	event = { "BufReadPre", "BufNewFile", "VeryLazy" },
 	config = function()
 		local conform = require("conform")

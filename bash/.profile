@@ -29,7 +29,3 @@ fi
 #go PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
-
-# Added by Toolbox App
-export PATH="$PATH:/home/fluffy/.local/share/JetBrains/Toolbox/scripts"
-. "$HOME/.cargo/env"

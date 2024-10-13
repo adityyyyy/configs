@@ -39,6 +39,11 @@
     "enabled": true
   },
   "format_on_save": "on",
+  "languages": {
+    "Python": {
+      "language_servers": ["pyright", "python-refactoring"]
+    }
+  },
   "lsp": {
     "gopls": {
       "initialization_options": {

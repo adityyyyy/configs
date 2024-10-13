@@ -1,7 +1,6 @@
 return {
 	"stevearc/conform.nvim",
-  branch = "nvim-0.9",
-	event = { "BufReadPre", "BufNewFile", "VeryLazy" },
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local conform = require("conform")
 
@@ -19,9 +18,11 @@ return {
 				graphql = { "prettier" },
 				liquid = { "prettier" },
 				lua = { "stylua" },
-				python = { "mypy", "black" },
+				python = { "black", "ruff" },
 				cpp = { "clang-format" },
+				c = { "clang-format" },
 				go = { "goimports", "gofumpt", "golines" },
+				java = { "clang-format" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

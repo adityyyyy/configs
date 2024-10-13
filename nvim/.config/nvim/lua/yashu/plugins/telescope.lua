@@ -6,6 +6,7 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"folke/todo-comments.nvim",
+		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -29,14 +30,20 @@ return {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
 						["<C-j>"] = actions.move_selection_next, -- move to next result
-						["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
+						["<C-a>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
 						["<C-t>"] = trouble_telescope.open,
 					},
+				},
+			},
+			extensions = {
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown(),
 				},
 			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("ui-select")
 
 		-- set keymaps
 		local keymap = vim.keymap -- for conciseness

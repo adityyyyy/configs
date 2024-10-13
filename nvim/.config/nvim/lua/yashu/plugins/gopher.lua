@@ -1,8 +1,24 @@
 return {
 	"olexsmir/gopher.nvim",
 	ft = "go",
-	config = function(_, opts)
-		require("gopher").setup(opts)
+	config = function()
+		require("gopher").setup({
+			commands = {
+				go = "go",
+				gotests = "gotests",
+				impl = "impl",
+				iferr = "iferr",
+				dlv = "dlv",
+			},
+			gotests = {
+				template = "default",
+				template_dir = "nil",
+				named = false,
+			},
+			gotag = {
+				transform = "snakecase",
+			},
+		})
 
 		local keymap = vim.keymap
 

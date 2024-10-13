@@ -27,19 +27,20 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"tsserver",
+				"ts_ls",
 				"html",
-				"cssls",
 				"tailwindcss",
 				"lua_ls",
-				"graphql",
 				"emmet_ls",
 				"prismals",
 				"gopls",
 				"pyright",
 				"clangd",
 				"bashls",
+				"jdtls",
 			},
+
+			automatic_installation = true,
 		})
 
 		mason_tool_installer.setup({
@@ -51,12 +52,13 @@ return {
 				"goimports",
 				"gofumpt",
 				"golines",
-				"mypy",
 				"ruff",
 				"black",
 				"delve",
 				"codelldb",
 				"debugpy",
+				"java-debug-adapter",
+				"java-test",
 			},
 		})
 	end,

@@ -6,17 +6,19 @@ return {
 		"nvim-neotest/nvim-nio",
 		"rcarriga/cmp-dap",
 		-- Installs the debug adapters for you
-		"williamboman/mason.nvim",
 		"jay-babu/mason-nvim-dap.nvim",
 		-- Add your own debuggers here
 		"leoluz/nvim-dap-go",
 		"mfussenegger/nvim-dap-python",
+		"theHamsta/nvim-dap-virtual-text",
 	},
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
+		local dapvt = require("nvim-dap-virtual-text")
 
 		dapui.setup()
+		dapvt.setup()
 
 		local keymap = vim.keymap
 
@@ -30,6 +32,8 @@ return {
 		keymap.set("n", "<leader>dsO", dap.step_out, { desc = "Debug: Step Out" })
 		keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
 		keymap.set("n", "<leader>dl", dapui.toggle, { desc = "Debug: See last session result." })
+
+		keymap.set("n", "<leader>dt", dap.terminate, { desc = "Debug: Terminate" })
 
 		keymap.set("n", "<leader>bp", function()
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))

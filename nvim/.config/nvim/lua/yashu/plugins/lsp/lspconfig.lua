@@ -84,27 +84,15 @@ return {
 		mason_lspconfig.setup_handlers({
 			-- default handler for installed servers
 			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
+				if server_name ~= "jdtls" then
+					lspconfig[server_name].setup({
+						capabilities = capabilities,
+					})
+				end
 			end,
-			["tsserver"] = function()
-				lspconfig["tsserver"].setup({
+			["ts_ls"] = function()
+				lspconfig["ts_ls"].setup({
 					capabilities = capabilities,
-
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.ts", "*.js, *.tsx, *.jsx" },
-							callback = function(ctx)
-								client.notify("$/onDidChangePyFile", { uri = ctx.match })
-							end,
-						})
-					end,
-					init_options = {
-						preferences = {
-							disableSuggestions = true,
-						},
-					},
 				})
 			end,
 			["tailwindcss"] = function()
@@ -115,38 +103,16 @@ return {
 			["pyright"] = function()
 				lspconfig["pyright"].setup({
 					capabilities = capabilities,
-					filetypes = {
-						"python",
-					},
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.py" },
-							callback = function(ctx)
-								client.notify("$/onDidChangePyFile", { uri = ctx.match })
-							end,
-						})
-					end,
 				})
 			end,
 			["bashls"] = function()
 				lspconfig["bashls"].setup({
 					capabilities = capabilities,
-					filetypes = {
-						"sh",
-					},
 				})
 			end,
 			["clangd"] = function()
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.cpp" },
-							callback = function(ctx)
-								client.notify("$/onDidChangeCPPFile", { uri = ctx.match })
-							end,
-						})
-					end,
 				})
 			end,
 			["emmet_ls"] = function()

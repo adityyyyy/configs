@@ -28,7 +28,6 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"ts_ls",
-				"html",
 				"tailwindcss",
 				"lua_ls",
 				"emmet_ls",

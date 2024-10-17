@@ -11,6 +11,8 @@ local bundles = {
 	vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
 }
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 -- Needed for running/debugging unit tests
 vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", true), "\n"))
 
@@ -37,45 +39,18 @@ local config = {
 		workspace_dir,
 	},
 
+	capabilities = capabilities,
+
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 
 	settings = {
 		java = {
-			home = "/usr/share/java/libintl.jar",
 			configuration = {
-				updateBuildConfiguration = "automatic",
+				updateBuildConfiguration = "interactive",
 			},
-			codeGeneration = {
-				toString = {
-					template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-				},
-				useBlocks = true,
-			},
-			completion = {
-				favoriteStaticMembers = {
-					"org.assertj.core.api.Assertions.*",
-					"org.junit.Assert.*",
-					"org.junit.Assume.*",
-					"org.junit.jupiter.api.Assertions.*",
-					"org.junit.jupiter.api.Assumptions.*",
-					"org.junit.jupiter.api.DynamicContainer.*",
-					"org.junit.jupiter.api.DynamicTest.*",
-					"org.mockito.Mockito.*",
-					"org.mockito.ArgumentMatchers.*",
-					"org.mockito.Answers.*",
-				},
-				importOrder = {
-					"#",
-					"java",
-					"javax",
-					"org",
-					"com",
-				},
-			},
-			signatureHelp = { enabled = true },
 			eclipse = { downloadSources = true },
-			extendedClientCapabilities = extendedClientCapabilities,
 			maven = { downloadSources = true },
+			gradle = { enabled = true },
 			referencesCodeLens = { enabled = true },
 			references = { includeDecompiledSources = true },
 			inlayHints = {
@@ -83,21 +58,39 @@ local config = {
 					enabled = "all", -- literals, all, none
 				},
 			},
-			flags = {
-				allow_incremental_sync = true,
-				server_side_fuzzy_completion = true,
-			},
-			format = { enabled = false },
-			saveActions = { organizeImports = true },
-			sources = {
-				organizeImports = {
-					starThreshold = 9999,
-					staticStarThreshold = 9999,
-				},
+			format = { enabled = true },
+			saveActions = {
+				organizeImports = true,
 			},
 		},
+		extendedClientCapabilities = extendedClientCapabilities,
+		contentProvider = { preferred = "fernflower" },
+		sources = {
+			organizeImports = {
+				starThreshold = 9999,
+				staticStarThreshold = 9999,
+			},
+		},
+		completion = {
+			favoriteStaticMembers = {
+				"org.assertj.core.api.Assertions.*",
+				"org.junit.Assert.*",
+				"org.junit.Assume.*",
+				"org.junit.jupiter.api.Assertions.*",
+				"org.junit.jupiter.api.Assumptions.*",
+				"org.junit.jupiter.api.DynamicContainer.*",
+				"org.junit.jupiter.api.DynamicTest.*",
+				"org.mockito.Mockito.*",
+				"org.mockito.ArgumentMatchers.*",
+				"org.mockito.Answers.*",
+			},
+		},
+		signatureHelp = { enabled = true },
 	},
-
+	flags = {
+		allow_incremental_sync = true,
+		server_side_fuzzy_completion = true,
+	},
 	init_options = {
 		bundles = bundles,
 	},
@@ -134,8 +127,8 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>tc", function()
 	require("jdtls").test_class()
-end)
+end, { desc = "Run tests" })
 
 vim.keymap.set("n", "<leader>tm", function()
 	require("jdtls").test_nearest_method()
-end)
+end, { desc = "Run test method" })

@@ -90,11 +90,6 @@ return {
 					})
 				end
 			end,
-			["gradle_ls"] = function()
-				lspconfig["gradle_ls"].setup({
-					capabilities = capabilities,
-				})
-			end,
 			["ts_ls"] = function()
 				lspconfig["ts_ls"].setup({
 					capabilities = capabilities,

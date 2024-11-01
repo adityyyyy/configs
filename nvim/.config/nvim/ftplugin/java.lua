@@ -24,7 +24,7 @@ local config = {
 		"-Declipse.product=org.eclipse.jdt.ls.core.product",
 		"-Dlog.protocol=true",
 		"-Dlog.level=ALL",
-		"-Xmx1g",
+		"-Xmx4g",
 		"--add-modules=ALL-SYSTEM",
 		"--add-opens",
 		"java.base/java.util=ALL-UNNAMED",
@@ -39,36 +39,37 @@ local config = {
 		workspace_dir,
 	},
 
-	capabilities = capabilities,
-
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 
 	settings = {
 		java = {
+			home = "/home/bunny/.sdkman/candidates/java/current/bin/java",
 			configuration = {
 				updateBuildConfiguration = "interactive",
+				-- TODO Update this by adding any runtimes that you need to support your Java projects and removing any that you don't have installed
+				-- The runtime name parameters need to match specific Java execution environments.  See https://github.com/tamago324/nlsp-settings.nvim/blob/2a52e793d4f293c0e1d61ee5794e3ff62bfbbb5d/schemas/_generated/jdtls.json#L317-L334
+				-- runtimes = {
+				-- 	{
+				-- 		name = "JavaSE-11",
+				-- 		path = "/usr/lib/jvm/java-11-openjdk-amd64",
+				-- 	},
+				-- },
 			},
 			eclipse = { downloadSources = true },
 			maven = { downloadSources = true },
 			gradle = { enabled = true },
+			implementationsCodeLens = { enabled = true },
 			referencesCodeLens = { enabled = true },
 			references = { includeDecompiledSources = true },
+			signatureHelp = { enabled = true },
+			format = { enabled = true },
 			inlayHints = {
 				parameterNames = {
 					enabled = "all", -- literals, all, none
 				},
 			},
-			format = { enabled = true },
 			saveActions = {
 				organizeImports = true,
-			},
-		},
-		extendedClientCapabilities = extendedClientCapabilities,
-		contentProvider = { preferred = "fernflower" },
-		sources = {
-			organizeImports = {
-				starThreshold = 9999,
-				staticStarThreshold = 9999,
 			},
 		},
 		completion = {
@@ -84,9 +85,28 @@ local config = {
 				"org.mockito.ArgumentMatchers.*",
 				"org.mockito.Answers.*",
 			},
+			importOrder = {
+				"java",
+				"javax",
+				"com",
+				"org",
+			},
 		},
-		signatureHelp = { enabled = true },
+		sources = {
+			organizeImports = {
+				starThreshold = 9999,
+				staticStarThreshold = 9999,
+			},
+		},
+		extendedClientCapabilities = extendedClientCapabilities,
+		codeGeneration = {
+			toString = {
+				template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+			},
+			useBlocks = true,
+		},
 	},
+	capabilities = capabilities,
 	flags = {
 		allow_incremental_sync = true,
 		server_side_fuzzy_completion = true,

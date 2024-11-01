@@ -1,0 +1,126 @@
+"" .ideavimrc - Matt Chapman
+
+
+"" Base Settings
+"" ========================================================
+
+set scrolloff=10
+set linenumber
+set relativelinenumber
+
+set smartcase
+set incsearch
+set hlsearch
+
+set visualbell
+
+" Use system clipboard
+set clipboard+=unnamed
+
+" leader key
+let mapleader = " "
+
+
+"" Plugin Settings
+"" ========================================================
+
+set surround
+set highlightedyank
+set nerdtree
+
+"" Key mappings
+"" ========================================================
+
+inoremap jk <Esc>
+
+" Tab navigation
+nnoremap <A-n> :tabnext<CR>
+nnoremap <A-p> :tabprev<CR>
+
+" Pane navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
+" Jump between methods
+nnoremap [[ <Action>(MethodUp)
+nnoremap ]] <Action>(MethodDown)
+
+" Easy visual indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Popup navigation
+inoremap <C-j> <Action>(PopupMenu-selectNext)
+inoremap <C-k> <Action>(PopupMenu-selectPrev)
+
+
+"" Leader commands
+"" ========================================================
+
+" Comment lines
+map <leader>gcc <action>(CommentByLineComment)
+
+" Open NERDTree (use q to exit)
+map <leader>ee :NERDTreeToggle<CR>
+
+" Folding
+map <leader>zc :action CollapseAllRegions<CR>
+map <leader>zo :action ExpandAllRegions<CR>
+
+" Window splits
+map <leader>sv <Action>(SplitVertically)
+map <leader>sh <Action>(SplitHorizontally)
+map <leader>sx <Action>(Unsplit)
+map <leader>sm <Action>(MoveEditorToOppositeTabGroup)
+
+" Display options
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen)
+
+" Actions
+map <leader>ca <action>(ShowIntentionActions)
+map <leader>se <action>(SearchEverywhere)
+
+" File navigation
+map <leader>ff <action>(GotoFile)
+map <leader>fr <action>(RecentFiles)
+map <leader>fc <action>(FindInPath)
+map <leader><leader> <Action>(RecentFiles)
+map <leader>fl <action>(RecentLocations)
+map <leader>fs <action>(NewScratchFile)
+
+" Close active tab
+map <leader>q <action>(CloseContent)
+
+nnoremap <leader>nh :nohls<return><esc>
+nnoremap <leader>, mZA,<Esc>`Z
+nnoremap <leader>; mZA;<Esc>`Z
+
+" Refactoring
+map <leader>rn <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rf <Action>(IntroduceField)
+map <leader>rs <Action>(ChangeSignature)
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+
+" Go to code
+nmap <leader>gd <Action>(GotoDeclaration)
+nmap <leader>gy <Action>(GotoTypeDeclaration)
+nmap <leader>gi <Action>(GotoImplementation)
+nmap <leader>gu <Action>(ShowUsages)
+nmap <leader>gt <Action>(GotoTest)
+nmap <leader>gf <Action>(Back)
+nmap <leader>gb <Action>(Forward)
+
+" Git windows
+map <leader>gc <Action>(CheckinProject)
+map <leader>gs <Action>(ActivateVersionControlToolWindow)
+map <leader>gb <Action>(Git.Branches)
+
+" Errors
+map <leader>]d <Action>(ReSharperGotoNextErrorInSolution)
+map <leader>[d <Action>(ReSharperGotoPrevErrorInSolution)
